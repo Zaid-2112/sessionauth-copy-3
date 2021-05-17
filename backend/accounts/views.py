@@ -8,6 +8,7 @@ from .serializers import UserSerializer
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
 
+# Authenticated the user  
 class CheckAuthenticatedView(APIView):
     def get(self, request, format=None):
         user = self.request.user
@@ -23,6 +24,7 @@ class CheckAuthenticatedView(APIView):
             return Response({ 'error': 'Something went wrong when checking authentication status' })
 
 @method_decorator(csrf_protect, name='dispatch')
+# signup for the new user
 class SignupView(APIView):
     permission_classes = (permissions.AllowAny, )
 
@@ -54,6 +56,7 @@ class SignupView(APIView):
                 return Response({ 'error': 'Something went wrong when registering account' })
 
 @method_decorator(csrf_protect, name='dispatch')
+# Login of user
 class LoginView(APIView):
     permission_classes = (permissions.AllowAny, )
 
@@ -74,6 +77,7 @@ class LoginView(APIView):
         except:
             return Response({ 'error': 'Something went wrong when logging in' })
 
+# Logout the authenticated the new user
 class LogoutView(APIView):
     def post(self, request, format=None):
         try:
@@ -81,14 +85,14 @@ class LogoutView(APIView):
             return Response({ 'success': 'Loggout Out' })
         except:
             return Response({ 'error': 'Something went wrong when logging out' })
-
+# using CSRFToken easily authneticated  
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class GetCSRFToken(APIView):
     permission_classes = (permissions.AllowAny, )
 
     def get(self, request, format=None):
         return Response({ 'success': 'CSRF cookie set' })
-
+# Delete the account view
 class DeleteAccountView(APIView):
     def delete(self, request, format=None):
         user = self.request.user

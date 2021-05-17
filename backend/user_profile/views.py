@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import UserProfile
 from .serializers import UserProfileSerializer
-
+# click on login button for userprofile 
 class GetUserProfileView(APIView):
     def get(self, request, format=None):
         try:
@@ -15,7 +15,7 @@ class GetUserProfileView(APIView):
             return Response({ 'profile': user_profile.data, 'username': str(username) })
         except:
             return Response({ 'error': 'Something went wrong when retrieving profile' })
-
+# update user profile
 class UpdateUserProfileView(APIView):
     def put(self, request, format=None):
         try:
